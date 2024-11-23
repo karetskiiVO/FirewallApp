@@ -16,17 +16,23 @@ type Filter struct {
 	defaultAccept bool
 }
 
+func istechnical (packet gopacket.Packet) bool {
+	networkLayer := packet.NetworkLayer()
+	fmt.Println("::::::::::::::::::::::::", networkLayer.LayerType())
+	
+	return false
+}
+
 func (f Filter) Accept(rawpacket []byte) bool {
 	packet := gopacket.NewPacket(rawpacket, layers.LayerTypeEthernet, gopacket.Lazy)
 
+	if istechnical(packet) {
+		return true
+	}
+
 	for _, rule := range f.rules {
-		switch rule.Accept(packet) {
-		case NotMatchedType:
-			continue
-		case AcceptRule:
+		if rule.Accept(packet) {
 			return !f.defaultAccept
-		case NotAcceptRule:
-			continue
 		}
 	}
 
