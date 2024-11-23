@@ -1,9 +1,9 @@
 {
-    "default":"accept",
+    "default":"drop",
     "rules":[
         {
             "type":"ip",
-            "destination":"8.8.8.[0-9]+"
+            "destination":"8.8.8.8"
         }
     ]
 }
