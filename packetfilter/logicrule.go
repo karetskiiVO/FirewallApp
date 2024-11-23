@@ -2,6 +2,7 @@ package packetfilter
 
 import (
 	"fmt"
+	"reflect"
 
 	"github.com/google/gopacket"
 )
@@ -11,14 +12,16 @@ type AndRule struct {
 }
 
 func NewAndRule(content map[string]any) (*AndRule, error) {
-	rawrulesWap, ok := content["rules"]
+	rawrulesMap, ok := content["rules"]
 	if !ok {
 		return nil, fmt.Errorf("can't solve and rule")
 	}
 
 	var err error
 
-	rawrules, ok := rawrulesWap.([]map[string]any)
+	fmt.Println(reflect.TypeOf(rawrulesMap), rawrulesMap)
+
+	rawrules, ok := rawrulesMap.([]map[string]any)
 	if !ok || len(rawrules) == 0 {
 		return nil, fmt.Errorf("wrong array of rules format")
 	}
@@ -49,14 +52,14 @@ type OrRule struct {
 }
 
 func NewOrRule(content map[string]any) (*OrRule, error) {
-	rawrulesWap, ok := content["rules"]
+	rawrulesMap, ok := content["rules"]
 	if !ok {
 		return nil, fmt.Errorf("can't solve and rule")
 	}
 
 	var err error
 
-	rawrules, ok := rawrulesWap.([]map[string]any)
+	rawrules, ok := rawrulesMap.([]map[string]any)
 	if !ok || len(rawrules) == 0 {
 		return nil, fmt.Errorf("wrong array of rules format")
 	}
