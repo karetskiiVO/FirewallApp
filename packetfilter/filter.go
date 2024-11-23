@@ -16,11 +16,11 @@ type Filter struct {
 	defaultAccept bool
 }
 
-func istechnical (packet gopacket.Packet) bool {
+func istechnical(packet gopacket.Packet) bool {
 	if packet.NetworkLayer() == nil {
 		return true
 	}
-	
+
 	return false
 }
 
@@ -60,7 +60,7 @@ func NewFilter(cfgfilename string) (*Filter, error) {
 
 	rules := make([]Rule, len(rawrules.Rules))
 	for i, rawrule := range rawrules.Rules {
-		rules[i], err = NewRuleFromMap(defaultAccept, rawrule)
+		rules[i], err = NewRuleFromMap(rawrule)
 		if err != nil {
 			return nil, err
 		}
@@ -68,6 +68,6 @@ func NewFilter(cfgfilename string) (*Filter, error) {
 
 	return &Filter{
 		defaultAccept: defaultAccept,
-		rules: rules,
+		rules:         rules,
 	}, nil
 }
