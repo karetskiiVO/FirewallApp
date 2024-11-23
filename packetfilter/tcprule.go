@@ -2,18 +2,19 @@ package packetfilter
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 
 	"github.com/google/gopacket"
 )
 
-type IPRule struct {
+type TCPRule struct {
 	srcaddr *regexp.Regexp
 	dstaddr *regexp.Regexp
 }
 
-func NewIPRuleFromMap(content map[string]any) (*IPRule, error) {
-	newrule := &IPRule{}
+func NewTCPRuleFromMap(content map[string]any) (*TCPRule, error) {
+	newrule := &TCPRule{}
 
 	var err error
 
@@ -43,14 +44,20 @@ func NewIPRuleFromMap(content map[string]any) (*IPRule, error) {
 	return newrule, nil
 }
 
-func (rule IPRule) Accept(packet gopacket.Packet) bool {
-	networkLayer := packet.NetworkLayer()
-	if networkLayer == nil {
+func (rule TCPRule) Accept(packet gopacket.Packet) bool {
+	transportLayer := packet.TransportLayer()
+	if transportLayer == nil {
 		return false
 	}
 
-	src := networkLayer.NetworkFlow().Src().String()
-	dst := networkLayer.NetworkFlow().Dst().String()
+	if transportLayer.LayerType().String() != "tcp" {
+		return false
+	}
+
+	src := transportLayer.TransportFlow().Src().String()
+	dst := transportLayer.TransportFlow().Dst().String()
+
+	log.Printf("tcp:%v > %v\n", src, dst)
 
 	accepsrc := true
 	accepdst := true
