@@ -18,7 +18,7 @@ func (rule IPRule) Accept(packet gopacket.Packet) bool {
 	if linkLayer == nil {
 		return false
 	}
-	
+
 	src := linkLayer.LinkFlow().Src().String()
 	dst := linkLayer.LinkFlow().Dst().String()
 
@@ -27,7 +27,7 @@ func (rule IPRule) Accept(packet gopacket.Packet) bool {
 	accepsrc := true
 	accepdst := true
 	if rule.srcaddr != nil {
-		accepdst = rule.srcaddr.MatchString(dst)
+		accepdst = rule.dstaddr.MatchString(dst)
 	}
 	if rule.dstaddr != nil {
 		accepsrc = rule.srcaddr.MatchString(src)
