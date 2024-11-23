@@ -21,6 +21,10 @@ func NewRuleFromMap(defaultAccept bool, content map[string]any) (Rule, error) {
 	switch ruletype {
 	case "ip":
 		return NewIPRuleFromMap(content)
+	case "tcp":
+		return NewTCPRuleFromMap(content)
+	case "udp":
+		return NewUDPRuleFromMap(content)
 	}
 	return nil, fmt.Errorf("invalid rule type")
 }
