@@ -13,10 +13,10 @@ type IPRule struct {
 	dstaddr *regexp.Regexp
 }
 
-func (rule IPRule) Accept(packet gopacket.Packet) bool {
+func (rule IPRule) Accept(packet gopacket.Packet) RuleResult {
 	linkLayer := packet.NetworkLayer()
 	if linkLayer == nil {
-		return false
+		return NotMatchedType
 	}
 
 	src := linkLayer.NetworkFlow().Src().String()
@@ -33,7 +33,10 @@ func (rule IPRule) Accept(packet gopacket.Packet) bool {
 		accepsrc = rule.srcaddr.MatchString(src)
 	}
 
-	return accepdst && accepsrc
+	if accepsrc && accepdst {
+		return AcceptRule
+	} 
+	return NotAcceptRule
 }
 
 func NewIPRuleFromMap(content map[string]any) (Rule, error) {

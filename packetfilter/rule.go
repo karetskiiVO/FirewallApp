@@ -6,9 +6,16 @@ import (
 	"github.com/google/gopacket"
 )
 
-// Rult - packet rules
+type RuleResult int
+
+const (
+	NotMatchedType RuleResult = 0
+	AcceptRule     RuleResult = 1
+	NotAcceptRule  RuleResult = 2
+)
+
 type Rule interface {
-	Accept(packet gopacket.Packet) bool
+	Accept(packet gopacket.Packet) RuleResult
 }
 
 func NewRuleFromMap(defaultAccept bool, content map[string]any) (Rule, error) {

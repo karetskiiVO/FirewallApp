@@ -19,8 +19,13 @@ func (f Filter) Accept(rawpacket []byte) bool {
 	packet := gopacket.NewPacket(rawpacket, layers.LayerTypeEthernet, gopacket.Lazy)
 
 	for _, rule := range f.rules {
-		if rule.Accept(packet) {
+		switch rule.Accept(packet) {
+		case NotMatchedType:
+			continue
+		case AcceptRule:
 			return !f.defaultAccept
+		case NotAcceptRule:
+			continue
 		}
 	}
 
