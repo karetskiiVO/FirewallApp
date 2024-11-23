@@ -86,7 +86,9 @@ func spy(infd, outfd int) {
 			continue
 		}
 
-		log.Print(gopacket.NewPacket(buffer[:length], layers.LayerTypeEthernet, gopacket.Default))
+		fmt.Println("========================")
+		fmt.Println(gopacket.NewPacket(buffer[:length], layers.LayerTypeEthernet, gopacket.Default))
+		fmt.Println("========================\n")
 
 		syscall.Write(outfd, buffer[:length])
 	}
