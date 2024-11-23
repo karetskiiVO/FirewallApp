@@ -23,7 +23,7 @@ func istechnical (packet gopacket.Packet) bool {
 		return true
 	}
 
-	fmt.Println("::::::::::::::::::::::::", networkLayer.LayerType())
+	fmt.Println("::::::::::::::::::::::::", networkLayer.LayerType().String())
 	
 	return false
 }
