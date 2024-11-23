@@ -2,7 +2,6 @@ package packetfilter
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 
 	"github.com/google/gopacket"
@@ -56,8 +55,6 @@ func (rule UDPRule) Accept(packet gopacket.Packet) bool {
 
 	src := transportLayer.TransportFlow().Src().String()
 	dst := transportLayer.TransportFlow().Dst().String()
-
-	log.Printf("udp:%v > %v", src, dst)
 
 	accepsrc := true
 	accepdst := true
