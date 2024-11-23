@@ -14,13 +14,13 @@ type IPRule struct {
 }
 
 func (rule IPRule) Accept(packet gopacket.Packet) bool {
-	linkLayer := packet.LinkLayer()
+	linkLayer := packet.NetworkLayer()
 	if linkLayer == nil {
 		return false
 	}
 
-	src := linkLayer.LinkFlow().Src().String()
-	dst := linkLayer.LinkFlow().Dst().String()
+	src := linkLayer.NetworkFlow().Src().String()
+	dst := linkLayer.NetworkFlow().Dst().String()
 
 	log.Printf("%v > %v", src, dst)
 
