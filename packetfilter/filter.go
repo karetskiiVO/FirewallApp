@@ -17,14 +17,9 @@ type Filter struct {
 }
 
 func istechnical (packet gopacket.Packet) bool {
-	networkLayer := packet.NetworkLayer()
-
-	if networkLayer == nil {
-		fmt.Println("::::::::::::::::::::::::", packet.LinkLayer().LayerType().String())
+	if packet.NetworkLayer() == nil {
 		return true
 	}
-
-	fmt.Println("::::::::::::::::::::::::", networkLayer.LayerType().String())
 	
 	return false
 }
