@@ -18,6 +18,11 @@ type Filter struct {
 
 func istechnical (packet gopacket.Packet) bool {
 	networkLayer := packet.NetworkLayer()
+
+	if networkLayer == nil {
+		return true
+	}
+
 	fmt.Println("::::::::::::::::::::::::", networkLayer.LayerType())
 	
 	return false
