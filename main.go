@@ -96,9 +96,9 @@ func spy(infd, outfd int, filter *packetfilter.Filter) {
 		fmt.Println("========================")
 		fmt.Println(gopacket.NewPacket(buffer[:length], layers.LayerTypeEthernet, gopacket.Default))
 		if filter.Accept(buffer[:length]) {
-			syscall.Write(outfd, buffer[:length])
-		} else {
 			fmt.Println(">>>>>>DROPPED<<<<<<")
+		} else {
+			syscall.Write(outfd, buffer[:length])
 		}
 		fmt.Println("========================\n")
 	}
