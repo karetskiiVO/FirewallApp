@@ -10,9 +10,10 @@
 
 ## Запуск
 
-``` <appname> <dev1 name> <dev2 name> <config file> ```
+``` <appname> <mode> <dev1 name> <dev2 name> <config file> ```
 
 Где ```<dev1 name>``` и ```<dev2 name>``` - устройства которые соединяются программным мостом.
+``` mode ``` - режим работы, либо ```socket```, либо ```nfqueue```
 
 ## Настройка
 
