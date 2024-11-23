@@ -50,7 +50,7 @@ func (rule TCPRule) Accept(packet gopacket.Packet) bool {
 		return false
 	}
 
-	if transportLayer.LayerType().String() != "tcp" {
+	if transportLayer.LayerType().String() != "TCP" {
 		return false
 	}
 

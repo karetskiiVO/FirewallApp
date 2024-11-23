@@ -50,7 +50,7 @@ func (rule UDPRule) Accept(packet gopacket.Packet) bool {
 		return false
 	}
 
-	if transportLayer.LayerType().String() != "udp" {
+	if transportLayer.LayerType().String() != "UDP" {
 		return false
 	}
 
