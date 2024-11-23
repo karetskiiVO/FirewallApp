@@ -22,6 +22,8 @@ func NewAndRule(content map[string]any) (*AndRule, error) {
 	fmt.Println(reflect.TypeOf(rawrulesMap), rawrulesMap)
 
 	rawrules, ok := rawrulesMap.([]map[string]any)
+
+	fmt.Println(rawrules)
 	if !ok || len(rawrules) == 0 {
 		return nil, fmt.Errorf("wrong array of rules format")
 	}
