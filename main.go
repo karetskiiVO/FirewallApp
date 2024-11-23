@@ -10,6 +10,7 @@ import (
 	"github.com/google/gopacket"
 	"github.com/google/gopacket/layers"
 	"github.com/jessevdk/go-flags"
+	"github.com/karetskiiVO/FirewallApp/packetfilter"
 )
 
 const (
@@ -23,8 +24,9 @@ func htons(i uint16) uint16 {
 func main() {
 	var options struct {
 		Args struct {
-			IFName1 string
-			IFName2 string
+			IFName1    string
+			IFName2    string
+			ConfigFile string
 		} `positional-args:"yes" required:"2"`
 	}
 
@@ -70,13 +72,18 @@ func main() {
 		log.Panic(err)
 	}
 
-	go spy(infd, outfd)
-	go spy(outfd, infd)
+	filter, err := packetfilter.NewFilter(options.Args.ConfigFile)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	go spy(infd, outfd, filter)
+	go spy(outfd, infd, filter)
 
 	<-wait
 }
 
-func spy(infd, outfd int) {
+func spy(infd, outfd int, filter *packetfilter.Filter) {
 	buffer := make([]byte, Length)
 
 	for {
@@ -88,8 +95,11 @@ func spy(infd, outfd int) {
 
 		fmt.Println("========================")
 		fmt.Println(gopacket.NewPacket(buffer[:length], layers.LayerTypeEthernet, gopacket.Default))
+		if filter.Accept(buffer[:length]) {
+			syscall.Write(outfd, buffer[:length])
+		} else {
+			fmt.Println(">>>>>>DROPPED<<<<<<")
+		}
 		fmt.Println("========================\n")
-
-		syscall.Write(outfd, buffer[:length])
 	}
 }

@@ -1,0 +1,9 @@
+{
+    "default":false,
+    "rules":[
+        {
+            "type":"ip",
+            "destination":"8.8.8.8"
+        }
+    ]
+}
