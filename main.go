@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
 	"os"
 	"syscall"
 
@@ -22,8 +23,8 @@ func htons(i uint16) uint16 {
 func main() {
 	var options struct {
 		Args struct {
-			Ifind1 int
-			Ifind2 int
+			IFName1 string
+			IFName2 string
 		} `positional-args:"yes" required:"2"`
 	}
 
@@ -36,6 +37,15 @@ func main() {
 
 	wait := make(chan struct{})
 
+	if1, err := net.InterfaceByName(options.Args.IFName1)
+	if err != nil {
+		log.Panic(err)
+	}
+	if2, err := net.InterfaceByName(options.Args.IFName2)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	infd, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, int(htons(syscall.ETH_P_ALL)))
 	if err != nil {
 		log.Panic(err)
@@ -47,14 +57,14 @@ func main() {
 
 	err = syscall.Bind(infd, &syscall.SockaddrLinklayer{
 		Protocol: htons(syscall.ETH_P_ALL),
-		Ifindex:  options.Args.Ifind1,
+		Ifindex:  if1.Index,
 	})
 	if err != nil {
 		log.Panic(err)
 	}
 	err = syscall.Bind(outfd, &syscall.SockaddrLinklayer{
 		Protocol: htons(syscall.ETH_P_ALL),
-		Ifindex:  options.Args.Ifind2,
+		Ifindex:  if2.Index,
 	})
 	if err != nil {
 		log.Panic(err)
