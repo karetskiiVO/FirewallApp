@@ -20,7 +20,7 @@ func istechnical (packet gopacket.Packet) bool {
 	networkLayer := packet.NetworkLayer()
 
 	if networkLayer == nil {
-		fmt.Println("no type")
+		fmt.Println("::::::::::::::::::::::::", packet.LinkLayer().LayerType().String())
 		return true
 	}
 
