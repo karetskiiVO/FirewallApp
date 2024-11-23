@@ -2,7 +2,6 @@ package packetfilter
 
 import (
 	"fmt"
-	"reflect"
 
 	"github.com/google/gopacket"
 )
