@@ -26,10 +26,10 @@ func (rule IPRule) Accept(packet gopacket.Packet) bool {
 
 	accepsrc := true
 	accepdst := true
-	if rule.srcaddr != nil {
+	if rule.dstaddr != nil {
 		accepdst = rule.dstaddr.MatchString(dst)
 	}
-	if rule.dstaddr != nil {
+	if rule.srcaddr != nil {
 		accepsrc = rule.srcaddr.MatchString(src)
 	}
 
