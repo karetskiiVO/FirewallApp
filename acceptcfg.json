@@ -2,8 +2,8 @@
     "default":"accept",
     "rules":[
         {
-            "type":"ip",
-            "destination":"8.8.8.[0-9]+"
+            "type":"tcp",
+            "destination":"8.8.8.8:8080"
         }
     ]
 }
