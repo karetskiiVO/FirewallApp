@@ -2,6 +2,7 @@ package packetfilter
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 
 	"github.com/google/gopacket"
@@ -40,16 +41,26 @@ func NewFilter(cfgfilename string) (*Filter, error) {
 	var rawrules ruleContainer
 	json.Unmarshal(content, &rawrules)
 
+	defaultAccept := true
+	switch rawrules.DefaultAccept {
+	case "accept":
+		defaultAccept = true
+	case "drop":
+		defaultAccept = false
+	default:
+		return nil, fmt.Errorf("Mismatch default format")
+	}
+
 	rules := make([]Rule, len(rawrules.Rules))
 	for i, rawrule := range rawrules.Rules {
-		rules[i], err = NewRuleFromMap(rawrules.DefaultAccept, rawrule)
+		rules[i], err = NewRuleFromMap(defaultAccept, rawrule)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	return &Filter{
-		defaultAccept: rawrules.DefaultAccept,
+		defaultAccept: defaultAccept,
 		rules: rules,
 	}, nil
 }
