@@ -53,7 +53,7 @@ func nfqtablesSpy(args []string) error {
 	for true {
 		select {
 		case packet := <-packets:
-			fmt.Println(p.Packet)
+			fmt.Println(packet.Packet)
 
 			if filter.Accept(packet.Packet.Data()) {
 				packet.SetVerdict(netfilter.Verdict(netfilter.NF_ACCEPT))
