@@ -15,10 +15,10 @@ type IPRule struct {
 
 func (rule IPRule) Accept(packet gopacket.Packet) bool {
 	linkLayer := packet.LinkLayer()
-	if linkLayer != nil {
+	if linkLayer == nil {
 		return false
 	}
-
+	
 	src := linkLayer.LinkFlow().Src().String()
 	dst := linkLayer.LinkFlow().Dst().String()
 
