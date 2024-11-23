@@ -27,7 +27,7 @@ func main() {
 			IFName1    string
 			IFName2    string
 			ConfigFile string
-		} `positional-args:"yes" required:"2"`
+		} `positional-args:"yes" required:"3"`
 	}
 
 	parser := flags.NewParser(&options, flags.Default&(^flags.PrintErrors))

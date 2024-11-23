@@ -19,13 +19,14 @@ func NewAndRule(content map[string]any) (*AndRule, error) {
 
 	var err error
 
-	fmt.Println(reflect.TypeOf(rawrulesMap), rawrulesMap)
-
-	rawrules, ok := rawrulesMap.([]map[string]any)
-
-	fmt.Println(rawrules)
-	if !ok || len(rawrules) == 0 {
+	rawrulesNonCast, ok := rawrulesMap.([]any)
+	if !ok || len(rawrulesNonCast) == 0 {
 		return nil, fmt.Errorf("wrong array of rules format")
+	}
+	rawrules := make([]map[string]any, len((rawrulesNonCast)))
+	for i := range rawrules {
+		rawrules[i], ok = rawrulesNonCast[i].(map[string]any)
+		return nil, fmt.Errorf("wrong format of elemnts from array of rules")
 	}
 
 	rules := make([]Rule, len(rawrules))
@@ -61,9 +62,14 @@ func NewOrRule(content map[string]any) (*OrRule, error) {
 
 	var err error
 
-	rawrules, ok := rawrulesMap.([]map[string]any)
-	if !ok || len(rawrules) == 0 {
+	rawrulesNonCast, ok := rawrulesMap.([]any)
+	if !ok || len(rawrulesNonCast) == 0 {
 		return nil, fmt.Errorf("wrong array of rules format")
+	}
+	rawrules := make([]map[string]any, len((rawrulesNonCast)))
+	for i := range rawrules {
+		rawrules[i], ok = rawrulesNonCast[i].(map[string]any)
+		return nil, fmt.Errorf("wrong format of elemnts from array of rules")
 	}
 
 	rules := make([]Rule, len(rawrules))
