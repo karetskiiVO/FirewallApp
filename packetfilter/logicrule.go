@@ -25,7 +25,9 @@ func NewAndRule(content map[string]any) (*AndRule, error) {
 	rawrules := make([]map[string]any, len((rawrulesNonCast)))
 	for i := range rawrules {
 		rawrules[i], ok = rawrulesNonCast[i].(map[string]any)
-		return nil, fmt.Errorf("wrong format of elemnts from array of rules")
+		if !ok {
+			return nil, fmt.Errorf("wrong format of elements from array of rules")
+		}
 	}
 
 	rules := make([]Rule, len(rawrules))
@@ -68,7 +70,9 @@ func NewOrRule(content map[string]any) (*OrRule, error) {
 	rawrules := make([]map[string]any, len((rawrulesNonCast)))
 	for i := range rawrules {
 		rawrules[i], ok = rawrulesNonCast[i].(map[string]any)
-		return nil, fmt.Errorf("wrong format of elemnts from array of rules")
+		if !ok {
+			return nil, fmt.Errorf("wrong format of elements from array of rules")
+		}
 	}
 
 	rules := make([]Rule, len(rawrules))
