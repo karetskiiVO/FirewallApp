@@ -25,18 +25,18 @@ func nfqtablesSpy(args []string) error {
 		return err
 	}
 
-	err = syscall.Exec(
-		"iptables",
-		[]string{
-			"-t", "mangle",
-			"-A", "FORWARD",
-			"-j", "NFQUEUE",
-			"--queue-num", fmt.Sprint(options.Args.QueueNum)},
-		[]string{},
-	)
-	if err != nil {
-		return err
-	}
+	// err = syscall.Exec(
+	// 	"iptables",
+	// 	[]string{
+	// 		"-t", "mangle",
+	// 		"-A", "FORWARD",
+	// 		"-j", "NFQUEUE",
+	// 		"--queue-num", fmt.Sprint(options.Args.QueueNum)},
+	// 	[]string{},
+	// )
+	// if err != nil {
+	// 	return err
+	// }
 
 	nfq, err := netfilter.NewNFQueue(options.Args.QueueNum, options.QueueLen, netfilter.NF_DEFAULT_PACKET_SIZE)
 	if err != nil {
