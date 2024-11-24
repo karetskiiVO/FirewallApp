@@ -94,10 +94,7 @@ func socketSpy(args []string) error {
 		return err
 	}
 
-	mtu := if1.MTU
-	if mtu > if2.MTU {
-		mtu = if2.MTU
-	}
+	mtu := 10000
 	go spy(infd, outfd, filter, mtu)
 	go spy(outfd, infd, filter, mtu)
 
