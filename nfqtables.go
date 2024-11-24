@@ -26,7 +26,7 @@ func nfqtablesSpy(args []string) error {
 	}
 
 	err = syscall.Exec(
-		"nfaueue",
+		"iptables",
 		[]string{
 			"-t", "mangle",
 			"-A", "FORWARD",
