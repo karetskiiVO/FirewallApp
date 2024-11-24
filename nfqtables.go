@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"syscall"
 
 	"github.com/jessevdk/go-flags"
 	"github.com/juturnas/go-netfilter-queue"
