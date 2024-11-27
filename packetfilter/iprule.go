@@ -61,8 +61,5 @@ func (rule IPRule) Accept(packet gopacket.Packet) bool {
 		accepsrc = rule.srcaddr.MatchString(src)
 	}
 
-	if accepsrc && accepdst {
-		return true
-	}
-	return false
+	return accepsrc && accepdst
 }

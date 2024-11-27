@@ -29,6 +29,8 @@ func NewRuleFromMap(content map[string]any) (Rule, error) {
 		return NewTCPRuleFromMap(content)
 	case "udp":
 		return NewUDPRuleFromMap(content)
+	case "dns":
+		return NewDNSRuleFromMap(content)
 	}
 	return nil, fmt.Errorf("invalid rule type")
 }
