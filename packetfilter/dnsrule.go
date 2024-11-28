@@ -25,14 +25,19 @@ func NewDNSRuleFromMap(content map[string]any) (*DNSRule, error) {
 	var requiresRA *bool
 
 	if depricatedRaw, ok := content["depricated"]; ok {
-		regsRaw, ok := depricatedRaw.([]string)
+		regsRaw, ok := depricatedRaw.([]any)
 
 		if !ok {
 			return nil, fmt.Errorf("wrong depricated format")
 		}
 
 		depricated = make([]*regexp.Regexp, len(regsRaw))
-		for i, reg := range regsRaw {
+		for i, regAny := range regsRaw {
+			reg, ok := regAny.(string)
+			if !ok {
+				return nil, fmt.Errorf("can't cast to string raw regular expresstion")
+			}
+
 			var err error
 			depricated[i], err = regexp.Compile(reg)
 			if err != nil {
