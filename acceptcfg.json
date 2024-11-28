@@ -11,12 +11,12 @@
                 {
                     "type":"tcp",
                     "destination":"8080"
-                },
-                {
-                    "type":"dns",
-                    "depricated":["google.[a-zA-Z]*"]
                 }
             ]
+        },
+        {
+            "type":"dns",
+            "depricated":["google.[a-z]*"]
         }
     ]
 }
