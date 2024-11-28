@@ -24,7 +24,7 @@
     1. ```ip``` - фильтр на cетевом уровне:
         ```
         {
-            "type"="ip",
+            "type":"ip",
             "source":"<source ip>",          # optional
             "destination":"<destination ip>" # optional
         }
@@ -32,7 +32,7 @@
     2. ```udp``` - фильтр на транспортном уровне над ```udp```
         ```
         {
-            "type"="udp",
+            "type":"udp",
             "source":"<source port>",          # optional
             "destination":"<destination port>" # optional
         }
@@ -40,7 +40,7 @@
     3. ```tcp```- фильтр на транспортном уровне над ```tcp```
         ```
         {
-            "type"="tcp",
+            "type":"tcp",
             "source":"<source ip>",          # optional
             "destination":"<destination ip>" # optional
         }
